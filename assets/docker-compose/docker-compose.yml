@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  mongodb:
+    image: 'mongo:latest'
+    container_name: 'mongo'
+    hostname: 'mongo'
+    ports:
+      - "27017:27017"
+  api:
+    build: .
+    container_name: 'flash-cards'
+    hostname: 'flash-cards'
+    ports:
+      - '8080:8080'
+    links:
+      - 'mongodb'

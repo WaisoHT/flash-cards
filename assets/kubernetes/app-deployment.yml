@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flash-cards-deployment
+  namespace: flash-cards
+  labels:
+    app: flash-cards
+spec:
+  securityContext:
+    fsGroup: 500
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: flash-cards
+    spec:
+      containers:
+        - name: flash-cards
+          image: dogood/flash-cards:latest
+          ports:
+            - containerPort: 8080

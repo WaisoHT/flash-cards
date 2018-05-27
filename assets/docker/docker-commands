@@ -1,0 +1,18 @@
+> Generate a image
+#Run Dockerfile in maven
+$ mvn install dockerfile:build
+
+#Run Dockerfile in terminal
+$ docker build -f Dockerfile -t dogood/flash-cards:1.0.0 -t dogood/flash-cards:latest .
+
+
+> Transform an image in a container
+$ docker run -p 9090:8080 --name flash-cards -d dogood/flash-cards
+
+
+> Remove all images
+$ docker rmi $(docker images -a -q)
+
+
+> Remove all containers
+$ docker rm $(docker ps -a -q)

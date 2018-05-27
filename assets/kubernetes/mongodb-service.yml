@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  namespace: flash-cards
+  labels:
+    name: mongodb
+spec:
+  securityContext:
+    fsGroup: 500
+  type: ClusterIP
+  ports:
+    - port: 27017
+  selector:
+    name: mongodb

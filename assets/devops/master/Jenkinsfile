@@ -1,0 +1,109 @@
+pipeline {
+  agent any
+
+  tools {
+    maven 'maven3'
+    jdk 'java8'
+  }
+
+  environment {
+    VERSION_POM = readMavenPom().getVersion()
+  }
+
+  stages {
+
+    stage('Clean WorkSpace') {
+      steps {
+        sh 'echo "##### Limpando o Workspace  #####"'
+        deleteDir()
+      }
+    }
+
+    stage('Git clone flash-cards') {
+      steps {
+        dir('flash-cards') {
+          sh 'echo "##### Clonando repositorio flash-cards #####"'
+          checkout([
+            $class: 'GitSCM',
+            extensions:[[$class: 'CleanCheckout']],
+            branches:[[name: '*/master']],
+            userRemoteConfigs:[[credentialsId: 'fabiano-bitbucket-key', url: 'https://fabianormatias@bitbucket.org/dogoodes/flash-cards.git']]
+          ])
+        }
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'echo "##### Aplicando lifecycle maven  #####"'
+        dir('flash-cards') {
+            sh "${M2_HOME}/bin/mvn clean package -DskipTests"
+        }
+      }
+    }
+
+    stage('SonarQube scanner') {
+      steps {
+        echo 'Testing with SonarQube...'
+      }
+    }
+
+    stage('Disponibilizando artefato para Download') {
+      steps {
+        sh 'echo "##### Archiving artifacts  #####"'
+        dir('flash-cards') {
+          archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+        }
+      }
+    }
+
+    stage('Docker build') {
+      steps {
+        sh 'echo "##### Docker building image, create tag and push to docker hub  #####"'
+        dir('flash-cards') {
+          script {
+            withDockerRegistry([credentialsId: 'fabiano-dockerhub-key']) {
+               def latest = docker.build('dogood/flash-cards:latest','.')
+               latest.push()
+               def version = docker.build('dogood/flash-cards:${VERSION_POM}','.')
+               version.push()
+            }
+          }
+        }
+      }
+    }
+
+    stage('Kubernetes deploy') {
+      steps {
+        sh 'echo "#####  Kubernetes  #####"'
+        dir('flash-cards') {
+          sh '''
+            kubectl apply -f assets/kubernetes/flash-cards.yml --validate=false
+            echo "Aguardando deploy..."
+            sleep 8
+            echo "Listando Pods"
+            sleep 3
+            kubectl get pods -o wide --namespace=flash-cards
+            kubectl describe pods flash-cards --namespace=flash-cards
+          '''
+        }
+      }
+    }
+
+  }
+
+  post {
+    always {
+      echo "${env.JOB_NAME} ${env.BUILD_NUMBER} finished!"
+    }
+
+    success {
+      echo "Success..."
+    }
+
+    failure {
+      echo "Failure..."
+    }
+  }
+
+}

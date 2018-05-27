@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flash-cards-service
+  namespace: flash-cards
+  labels:
+    app: flash-cards
+spec:
+  securityContext:
+    fsGroup: 500
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 9001
+      targetPort: 8080
+      name: http
+  selector:
+    name: flash-cards
