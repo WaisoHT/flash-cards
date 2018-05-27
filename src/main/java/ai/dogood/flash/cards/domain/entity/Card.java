@@ -30,6 +30,8 @@ public class Card implements Serializable {
 	@SerializedName("target_word")
 	private String targetWord;
 
+	private int level;
+
 	public Card(){}
 
 	private Card(final Builder builder) {
@@ -38,6 +40,7 @@ public class Card implements Serializable {
 		this.targetLanguage = builder.targetLanguage;
 		this.sourceWord = builder.sourceWord;
 		this.targetWord = builder.targetWord;
+		this.level = builder.level;
 	}
 
 	public static class Builder {
@@ -46,6 +49,7 @@ public class Card implements Serializable {
 		private String targetLanguage;
 		private String sourceWord;
 		private String targetWord;
+		private int level;
 
 		public Builder addUuid(String uuid) {
 			this.uuid = uuid;
@@ -69,6 +73,11 @@ public class Card implements Serializable {
 
 		public Builder targetWord(String targetWord) {
 			this.targetWord = targetWord;
+			return this;
+		}
+
+		public Builder level(int level) {
+			this.level = level;
 			return this;
 		}
 
