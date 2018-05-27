@@ -1,6 +1,6 @@
 package ai.dogood.flash.cards.domain.entity;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,61 +18,117 @@ public class Card implements Serializable {
 	@Indexed(unique = true)
 	private String uuid;
 
-	@SerializedName("source_language")
-	private String sourceLanguage;
+	@JsonProperty("language-origin")
+	private String languageOrigin;
 
-	@SerializedName("target_language")
-	private String targetLanguage;
+	@JsonProperty("language-destiny")
+	private String languageDestiny;
 
-	@SerializedName("source_word")
-	private String sourceWord;
+	@JsonProperty("value-origin")
+	private String valueOrigin;
 
-	@SerializedName("target_word")
-	private String targetWord;
+	@JsonProperty("value-destiny")
+	private String valueDestiny;
 
 	private int level;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public String getLanguageOrigin() {
+		return languageOrigin;
+	}
+
+	public void setLanguageOrigin(String languageOrigin) {
+		this.languageOrigin = languageOrigin;
+	}
+
+	public String getLanguageDestiny() {
+		return languageDestiny;
+	}
+
+	public void setLanguageDestiny(String languageDestiny) {
+		this.languageDestiny = languageDestiny;
+	}
+
+	public String getValueOrigin() {
+		return valueOrigin;
+	}
+
+	public void setValueOrigin(String valueOrigin) {
+		this.valueOrigin = valueOrigin;
+	}
+
+	public String getValueDestiny() {
+		return valueDestiny;
+	}
+
+	public void setValueDestiny(String valueDestiny) {
+		this.valueDestiny = valueDestiny;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
 
 	public Card(){}
 
 	private Card(final Builder builder) {
 		this.uuid = builder.uuid;
-		this.sourceLanguage = builder.sourceLanguage;
-		this.targetLanguage = builder.targetLanguage;
-		this.sourceWord = builder.sourceWord;
-		this.targetWord = builder.targetWord;
+		this.languageOrigin = builder.languageOrigin;
+		this.languageDestiny = builder.languageDestiny;
+		this.valueOrigin = builder.valueOrigin;
+		this.valueDestiny = builder.valueDestiny;
 		this.level = builder.level;
 	}
 
 	public static class Builder {
 		private String uuid;
-		private String sourceLanguage;
-		private String targetLanguage;
-		private String sourceWord;
-		private String targetWord;
+		private String languageOrigin;
+		private String languageDestiny;
+		private String valueOrigin;
+		private String valueDestiny;
 		private int level;
 
-		public Builder addUuid(String uuid) {
+		public Builder uuid(String uuid) {
 			this.uuid = uuid;
 			return this;
 		}
 
-		public Builder sourceLanguage(String sourceLanguage) {
-			this.sourceLanguage = sourceLanguage;
+		public Builder languageOrigin(String languageOrigin) {
+			this.languageOrigin = languageOrigin;
 			return this;
 		}
 
-		public Builder targetLanguage(String targetLanguage) {
-			this.targetLanguage = targetLanguage;
+		public Builder languageDestiny(String languageDestiny) {
+			this.languageDestiny = languageDestiny;
 			return this;
 		}
 
-		public Builder sourceWord(String sourceWord) {
-			this.sourceWord = sourceWord;
+		public Builder valueOrigin(String valueOrigin) {
+			this.valueOrigin = valueOrigin;
 			return this;
 		}
 
-		public Builder targetWord(String targetWord) {
-			this.targetWord = targetWord;
+		public Builder valueDestiny(String valueDestiny) {
+			this.valueDestiny = valueDestiny;
 			return this;
 		}
 

@@ -27,7 +27,7 @@ pipeline {
             $class: 'GitSCM',
             extensions:[[$class: 'CleanCheckout']],
             branches:[[name: '*/master']],
-            userRemoteConfigs:[[credentialsId: 'fabiano-bitbucket-key', url: 'https://fabianormatias@bitbucket.org/dogoodes/flash-cards.git']]
+            userRemoteConfigs:[[credentialsId: 'fabiano-bitbucket-key', url: 'https://fabianormatias@bitbucket.org/fabianormatias/flash-cards.git']]
           ])
         }
       }

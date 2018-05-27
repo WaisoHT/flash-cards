@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @Component
 public class CardBO {
@@ -27,6 +28,8 @@ public class CardBO {
 
 	@Transactional(propagation = Propagation.REQUIRED)
     public void saveCard(Card card) {
+        String uuid = UUID.randomUUID().toString();
+        card.setUuid(uuid);
 		cardRepository.save(card);
     }
 
