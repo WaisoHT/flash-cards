@@ -111,7 +111,7 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 9001
+      port: 9003
       targetPort: 8080
       name: http
   selector:
