@@ -27,7 +27,7 @@ pipeline {
             $class: 'GitSCM',
             extensions:[[$class: 'CleanCheckout']],
             branches:[[name: '*/master']],
-            userRemoteConfigs:[[credentialsId: 'fabiano-bitbucket-key', url: 'https://fabianormatias@bitbucket.org/fabianormatias/flash-cards.git']]
+            userRemoteConfigs:[[credentialsId: 'fabiano-github-key', url: 'git@github.com:WaisoHT/flash-cards.git']]
           ])
         }
       }
@@ -39,12 +39,6 @@ pipeline {
         dir('flash-cards') {
             sh "${M2_HOME}/bin/mvn clean package -DskipTests"
         }
-      }
-    }
-
-    stage('SonarQube scanner') {
-      steps {
-        echo 'Testing with SonarQube...'
       }
     }
 
