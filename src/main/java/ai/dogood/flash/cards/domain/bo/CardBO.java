@@ -1,6 +1,6 @@
 package ai.dogood.flash.cards.domain.bo;
 
-import ai.dogood.flash.cards.Repository.CardRepository;
+import ai.dogood.flash.cards.repository.CardRepository;
 import ai.dogood.flash.cards.domain.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

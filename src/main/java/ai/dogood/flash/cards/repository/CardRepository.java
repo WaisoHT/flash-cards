@@ -1,4 +1,4 @@
-package ai.dogood.flash.cards.Repository;
+package ai.dogood.flash.cards.repository;
 
 import ai.dogood.flash.cards.domain.entity.Card;
 import org.springframework.data.mongodb.repository.MongoRepository;
