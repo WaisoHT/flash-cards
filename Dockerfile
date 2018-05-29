@@ -1,5 +1,5 @@
 FROM openjdk:8-jdk-alpine
-MAINTAINER dogood.ai <devgood@dogood.ai>
+MAINTAINER dogood.es <devgood@dogood.es>
 
 VOLUME /tmp
 ADD target/flash-cards-1.0.0.jar /app/app.jar
